@@ -32,12 +32,12 @@ class SettingController extends Controller
     {
         $validated = $request->validated();
 
-        if($request->hasfile('image')){
+        if($request->hasFile('image')){
             if($setting->about_photo != null){
                 Storage::delete($setting->about_photo);
             }
-            $get_new_file = $request->file('image')->store('images');
-            $setting->about_photo = $get_new_file;
+            $get_new_file = $request->file('image')->store('images', 'public');
+            $setting->about_photo = 'storage/' . $get_new_file;
         }
         
         $setting->update($validated);

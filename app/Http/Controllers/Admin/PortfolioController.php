@@ -78,12 +78,15 @@ class PortfolioController extends Controller
     {
         $validated = $request->validated();
 
-        if ($request->hasfile('image')) {
+        if ($request->hasFile('image')) {
+            if ($portfolio->image) {
             Storage::delete($portfolio->image);
-            $get_file = $request->file('image')->store('images/portfolios');
-            $validated['image'] = $get_file;
+            }
+            $get_new_file = $request->file('image')->store('images', 'public');
+            $validated['image'] = 'storage/' . $get_new_file;
         }
 
+ 
         $portfolio->update($validated);
 
         return to_route('admin.portfolio.index')->with('message', 'Portfolio Updated');

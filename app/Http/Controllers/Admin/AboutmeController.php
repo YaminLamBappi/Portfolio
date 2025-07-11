@@ -33,9 +33,9 @@ class AboutmeController extends Controller
     {
         $validated = $request->validated();
 
-        if ($request->hasfile('image')) {
-            $get_new_file = $request->file('image')->store('images');
-            $validated['profile_pic'] = $get_new_file;
+        if ($request->hasFile('image')) {
+            $get_new_file = $request->file('image')->store('images', 'public');
+            $validated['profile_pic'] = 'storage/' . $get_new_file;
         }
 
         $user->update($validated);

@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5 px-5 pl-lg-0 pb-5 pb-lg-0">
-                    <img class="img-fluid w-100 rounded-circle shadow-sm" src="{{ asset("storage/$user?->profile_pic") }}" alt="">
+                    <img class="img-fluid w-100 rounded-circle shadow-sm" src="{{ asset("$user?->profile_pic") }}" alt="">
                 </div>
                 <div class="col-lg-7 text-center text-lg-left">
                     <h3 class="text-white font-weight-normal mb-3">I'm</h3>
@@ -57,7 +57,7 @@
             </div>
             <div class="row align-items-center">
                 <div class="col-lg-5 pb-4 pb-lg-0">
-                    <img class="img-fluid rounded w-100" src="{{ asset("storage/$setting->about_photo") }}" alt="">
+                    <img class="img-fluid rounded w-100" src="{{ asset("$setting->about_photo") }}" alt="">
                 </div>
                 <div class="col-lg-7">
                     <h3 class="mb-4">{{ $setting->about_title }}</h3>
@@ -72,7 +72,7 @@
                         <div class="col-sm-6 py-2"><h6>Address: <span class="text-secondary">{{ $user?->address }}</span></h6></div>
                         <div class="col-sm-6 py-2"><h6>Freelance: <span class="text-secondary">Available</span></h6></div>
                     </div>
-                    <a href="{{ $setting->freelance_url }}" class="btn btn-outline-primary mr-4">Hire Me</a>
+                    <a href="mailto:{{ $setting->contact_mail }}" class="btn btn-outline-primary mr-4">Hire Me</a>
                     {{-- <a href="" class="btn btn-outline-primary">Learn More</a> --}}
                 </div>
             </div>
@@ -180,32 +180,33 @@
                 <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Gallery</h1>
                 <h1 class="position-absolute text-uppercase text-primary">My Portfolio</h1>
             </div>
-            <div class="row">
-                <div class="col-12 text-center mb-2">
-                    <ul class="list-inline mb-4" id="portfolio-flters">
-                        <li class="btn btn-sm btn-outline-primary m-1 active"  data-filter="*">All</li>
-                        @foreach ($categories as $category)
-                        <li class="btn btn-sm btn-outline-primary m-1" data-filter=".{{$category->name}}">{{ $category->name }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+         
             <div class="row portfolio-container">
-                @foreach ($portfolios as $portfolio)
-                <div class="col-lg-4 col-md-6 mb-4 portfolio-item {{$portfolio->category->name }}">
-                    <div class="position-relative overflow-hidden mb-2">
-                        <img class="img-fluid rounded w-100" src="{{ asset("storage/$portfolio->image") }}" alt="">
-                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
-                            <a href="{{ asset("storage/$portfolio->image") }}" data-lightbox="portfolio">
-                                <i class="fa fa-plus text-white" style="font-size: 50px;"></i>
-                            </a>
-                            <a href="{{ $portfolio->project_url }}" data-lightbox="portfolio">
-                                <i class="fa-solid fa-link text-white" style="margin-left:20px; font-size: 50px;"></i>
-                            </a>
+                @if($portfolios->count())
+                    @foreach ($portfolios as $portfolio)
+                    <div class="col-lg-4 col-md-6 mb-4 portfolio-item">
+                        <div class="position-relative overflow-hidden mb-2">
+                            <img class="img-fluid rounded w-100" src="{{ asset("{$portfolio->image}") }}" alt="">
+                            <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
+                                <a href="{{ asset("{$portfolio->image}") }}" data-lightbox="portfolio">
+                                    <i class="fa fa-plus text-white" style="font-size: 50px;"></i>
+                                </a>
+                                <a href="{{ $portfolio->project_url }}" target="_blank">
+                                    <i class="fa-solid fa-link text-white" style="margin-left:20px; font-size: 50px;"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-center">
+                            <h5 class="font-weight-bold">{{ $portfolio->title }}</h5>
+                            <p>{{ $portfolio->description }}</p>
                         </div>
                     </div>
-                </div>
-                @endforeach
+                    @endforeach
+                @else
+                    <div class="col-12 text-center">
+                        <p>No portfolio items found.</p>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -213,7 +214,7 @@
 
 
     <!-- Testimonial Start -->
-    <div class="container-fluid py-5" id="testimonial">
+    <!-- <div class="container-fluid py-5" id="testimonial">
         <div class="container">
             <div class="position-relative d-flex align-items-center justify-content-center">
                 <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Review</h1>
@@ -235,7 +236,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Testimonial End -->
 
     <!-- Contact Start -->
